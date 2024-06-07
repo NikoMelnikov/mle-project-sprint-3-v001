@@ -10,7 +10,7 @@ class FastApiHandler:
             "model_params": dict
         }
 
-        self.model_path = "../services/model/model.pkl"
+        self.model_path = "./model/model.pkl"
         self.load_churn_model(model_path=self.model_path)
         
         self.required_model_params = [
@@ -26,7 +26,7 @@ class FastApiHandler:
             print(f"Failed to load model: {e}")
     #получаю предсказания модели в виде числа
     def churn_predict(self, model_params):
-        return int(self.model.predict(model_params).round(2)[0])
+        return self.model.predict(model_params)[0]
     #проверяю параметры запроса
     def check_required_query_params(self, query_params: dict) -> bool:
         if "build_id" not in query_params or "model_params" not in query_params:
