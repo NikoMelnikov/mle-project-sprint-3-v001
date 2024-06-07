@@ -24,7 +24,7 @@ Response: {'build_id': 22, 'cost': 16073731}
 
 #### Для запуска сервиса fast api:
 
-python -m app.churn_app.py
+python -m app.churn_app
 
 Документация по методу:
 
