@@ -8,5 +8,5 @@ services:
       - "${APP_VM_PORT}:${APP_DOCKER_PORT}"
     volumes:
       - type: bind
-        source: ./model
-        target: /churn_app/model
+        source: ./models
+        target: /services/models
