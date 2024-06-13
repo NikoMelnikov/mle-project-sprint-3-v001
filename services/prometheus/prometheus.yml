@@ -1,19 +1,13 @@
 global:
-  # частота сбора метрик
-  scrape_interval: 6s
-  
-  # если за это время сборщик не собрал метрики, то процесс прерывается
+  scrape_interval: 5s
   scrape_timeout: 3s
 
 scrape_configs:
-  # имя сборщика
-  - job_name: 'scrapping-main-app'
+  - job_name: 'scrapping-fastapi-app'
 
-    # страницы сбора метрик
     metrics_path: /metrics
     scheme: http
     
     static_configs:
     - targets:
-      # адрес микросервиса
       - fastapi_app:8081
