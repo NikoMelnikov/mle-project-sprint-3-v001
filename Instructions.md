@@ -138,3 +138,5 @@ $ docker compose stop
 $ docker compose down
 
 http://localhost:9090/targets
+
+$ python -m app.test_load
