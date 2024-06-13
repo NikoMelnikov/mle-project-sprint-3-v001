@@ -1,8 +1,11 @@
 FROM python:3.11-slim
-LABEL author=${LABEL}
+
 COPY . ./services
+
 WORKDIR services
+
 RUN pip3 install -r requirements.txt
+
 EXPOSE ${APP_DOCKER_PORT}
-VOLUME /models
+
 CMD uvicorn app.app:app --reload --port ${APP_DOCKER_PORT} --host 0.0.0.0
