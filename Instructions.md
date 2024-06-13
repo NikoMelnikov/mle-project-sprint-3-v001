@@ -135,3 +135,6 @@ $ docker container stop  <<CONTAINER ID>>
 #### Для запуска с использованием docker-compose:
 $ docker compose up  --build
 $ docker compose stop
+$ docker compose down
+
+http://localhost:9090/targets
