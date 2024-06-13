@@ -22,10 +22,14 @@ metric_prediction_time_counter = Counter(
 
 metric_prediction_comparison = Histogram(
     'app_prediction_comparison',
-    'Histogram off comparison predicted value with median and max value',
-    buckets=[1.050000e+07, 1.350000e+07, 2.224400e+07]
+    'Histogram off comparison predicted value with q1, median and q3',
+    buckets=[8400000.0, 10500000.0, 13500000.0]
 )
 
+metric_error_counter = Counter(
+    'app_error_counter',
+    'Total number of errors occurred',
+)
 
 @app.post("/api/predict/") 
 def get_prediction_for_item(
@@ -65,22 +69,26 @@ def get_prediction_for_item(
         ]
     )
 ):
-    start_time = time.time()
+    try:
+        start_time = time.time()
   
-    all_params = {
-        "request_id": request_id,
-        "model_params": model_params
-    }
+        all_params = {
+                       "request_id": request_id,
+                       "model_params": model_params
+                     }
     
-    response = app.handler.handle(all_params)
-    end_time = time.time()
-    processing_time = end_time - start_time
-    metric_prediction_time_counter.inc(processing_time)
-    for cost in response['cost']:
-        if cost > 1.050000e+07:
-            metric_prediction_comparison.observe(cost)
+        response = app.handler.handle(all_params)
+        end_time = time.time()
+        processing_time = end_time - start_time
+        metric_prediction_time_counter.inc(processing_time)
+        for cost in response['cost']:
+            if cost > 1.050000e+07:
+                metric_prediction_comparison.observe(cost)
             
-    return response
+        return response
+    except Exception as e:
+        metric_error_counter.inc()
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8081)
