@@ -15,17 +15,18 @@ app.handler = FastApiHandler()
 # Инструментатор для prometheus
 Instrumentator().instrument(app).expose(app)
 
+# Создаю расчета времени предсказания
 metric_prediction_time_counter = Counter(
     'app_time_exception_counter',
     'Total time spent processing requests'
 )
-
+# Метрика для распределения сумм предсказаний
 metric_prediction_comparison = Histogram(
     'app_prediction_comparison',
-    'Histogram off comparison predicted value with q1, median and q3',
-    buckets=[8400000.0, 10500000.0, 13500000.0]
+    'Histogram for compare prediction value',
+    buckets=[i * 600000 for i in range(51)] # в датасете минимальная стоимость составляла порядка 600000 
 )
-
+# Метрика для подсчета ошибочных запросов
 metric_error_counter = Counter(
     'app_error_counter',
     'Total number of errors occurred',
@@ -82,10 +83,9 @@ def get_prediction_for_item(
         processing_time = end_time - start_time
         metric_prediction_time_counter.inc(processing_time)
         for cost in response['cost']:
-            if cost > 1.050000e+07:
-                metric_prediction_comparison.observe(cost)
-            
+            metric_prediction_comparison.observe(cost)
         return response
+    
     except Exception as e:
         metric_error_counter.inc()
         raise HTTPException(status_code=500, detail="Internal Server Error")
