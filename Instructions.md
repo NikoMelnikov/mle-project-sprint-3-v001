@@ -4,27 +4,23 @@
 
 Модель сохранена с помощью MLflow в формате pkl. Запуск MLflow осуществляется скриптом:
 
-\` sh run_mlflow_server.sh \`
+$ sh run_mlflow_server.sh
 
 Загрузка модели в Приложение обработчике осуществляется с помощью модуля  pickle, загрузка с использованием joblift приводила к ошибкам.
 Также в виртуальной среде установлена версия python Python 3.10.12
 
 В корневой директории создается виртуальное пространство и устанавливаются зависимости.
 
-
-   \`\`\`
-   python3 -m venv .mle-project-sprint-3-v001-venv
-   source .mle-project-sprint-3-v001-venv/bin/activate
-   pip install -r requirements.txt  
-   \`\`\`
-
+$ python3 -m venv .mle-project-sprint-3-v001-venv
+$ source .mle-project-sprint-3-v001-venv/bin/activate
+$ pip install -r requirements.txt  
 
 В директории app создано приложение app - приложение Fast API для модели прогнозирования стоимости квартиры которое в свою очередь использует приложение обработчик handler.
 
 #### Для тестирования работоспособности функции обработчика:
 Протестировать обработчик напрямую возможно запустив скрипт:
 
-  \` $ python -m app.handler \`
+ $ python -m app.handler 
 
 Ожидаемый ответ:
 
@@ -43,11 +39,11 @@
 
 Также попробовал подготовить юнит тестирование, запустить можно по скрипту:
 
-  \`$ python -m app.test \`
+$ python -m app.test 
 
 #### Для запуска сервиса fast api:
 
-  \` $ python -m app.app \`
+$ python -m app.app 
 
 Документация по методу:
 
@@ -97,7 +93,7 @@ curl -X 'POST'
 
 Ожидаемый ответ:
 
-\`\`\`
+`bash
 {
   "request_id": 44,
   "cost": [
@@ -105,41 +101,35 @@ curl -X 'POST'
     12688998.272761442
   ]
 }
-\`\`\`
+`
 
 ### 2. FastAPI микросервис в Docker-контейнере
 Собираем образ:
 
-\`\`\`
- $ docker image build -f /home/mle-user/mle_projects/mle-project-sprint-3-v001/services/Dockerfile_ml_service . --tag services:with_env
-\`\`\`
+$ docker image build -f /home/mle-user/mle_projects/mle-project-sprint-3-v001/services/Dockerfile_ml_service . --tag services:with_env
+
 
 Запускаем:
 
-\`\`\`
- $ docker container run --publish 4601:8081 --volume=./models:/services/models   --env-file .env services:with_env
-\`\`\`
+$ docker container run --publish 4601:8081 --volume=./models:/services/models   --env-file .env services:with_env
 
 Проверяем доступность метода:
 
 http://localhost:4601/docs
 
 Остановка контейнера:
-\`\`\`
- $ docker container ps 
- $ docker container stop  <<CONTAINER ID>>
-\`\`\`
+
+$ docker container ps 
+$ docker container stop  <<CONTAINER ID>>
 
 #### Для запуска с использованием docker-compose:
 
-\` $ docker compose up  --build \`
+$ docker compose up  --build 
 
 останавливаем и если нужно удаляем контейнер
 
-\`\`\`
- $ docker compose stop
- $ docker compose down
-\`\`\`
+$ docker compose stop
+$ docker compose down
 
 ### 3. Запуск сервисов для системы мониторинга
 
@@ -147,7 +137,7 @@ http://localhost:4601/docs
 
 Для запуска сервиса
 
-\` $ docker compose up  --build \`
+$ docker compose up  --build 
 
 Для перенаправления для Promethus необходимо добавить порт 9090 для Grafana 3000 в консольной вкладке "ПОРТЫ"
 Проверить импорт метрик возможно по адресу:
@@ -164,7 +154,7 @@ http://localhost:3000/
 
 Для построения дашбордов используем скрипт для имитации нарузки:
 
-\` $ python -m app.test_load \`
+$ python -m app.test_load 
 
 Скрипт используя пример данных services/models/X_example.csv последовательно отправит 50 запросов
 в сервис со случайной задержкой между отправками в пределах от 1 до 5 секунд. Данный интервал возможно регулировать непосредственно в скрипте.
