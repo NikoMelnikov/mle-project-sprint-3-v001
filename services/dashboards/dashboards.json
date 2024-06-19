@@ -24,96 +24,8 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "adp2z2pz1faioc"
+                "uid": "fdpahg7ywm2v4b"
             },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "thresholds"
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 0,
-                "y": 0
-            },
-            "id": 4,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-            },
-            "pluginVersion": "11.0.0",
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
-                    },
-                    "disableTextWrap": false,
-                    "editorMode": "code",
-                    "exemplar": false,
-                    "expr": "rate(app_error_counter_total{}[5m])",
-                    "format": "time_series",
-                    "fullMetaSearch": false,
-                    "includeNullMetadata": true,
-                    "instant": false,
-                    "legendFormat": "Mistakes per sp time",
-                    "range": true,
-                    "refId": "A",
-                    "useBackend": false
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
-                    },
-                    "editorMode": "code",
-                    "expr": "app_error_counter_total",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Mistakes total",
-                    "range": true,
-                    "refId": "B"
-                }
-            ],
-            "title": "Internal mistake",
-            "type": "stat"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "adp2z2pz1faioc"
-            },
-            "description": "",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -171,8 +83,211 @@
             "gridPos": {
                 "h": 8,
                 "w": 12,
+                "x": 0,
+                "y": 0
+            },
+            "id": 4,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "maxHeight": 600,
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "fdpahg7ywm2v4b"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(http_requests_total[1m])",
+                    "instant": false,
+                    "legendFormat": "Количество входящих запросов",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "fdpahg7ywm2v4b"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(http_requests_total{handler=\"/predict\"}[1m])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": " Частота входящих запросов ",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "fdpahg7ywm2v4b"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(http_request_duration_seconds_count[5m])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "К-во запросов в секунду",
+                    "range": true,
+                    "refId": "C"
+                }
+            ],
+            "title": "Нагрузка на сервис",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "fdpahg7ywm2v4b"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
                 "x": 12,
                 "y": 0
+            },
+            "id": 3,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "11.0.0",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "fdpahg7ywm2v4b"
+                    },
+                    "editorMode": "code",
+                    "expr": "app_error_counter_total",
+                    "instant": false,
+                    "legendFormat": "Общее к-во ошибок",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "fdpahg7ywm2v4b"
+                    },
+                    "editorMode": "code",
+                    "expr": "rate(app_error_counter_total_total{}[1m])",
+                    "hide": false,
+                    "instant": false,
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "B"
+                }
+            ],
+            "title": "Внутренние ошибки и их частота",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "fdpahg7ywm2v4b"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 8
             },
             "id": 1,
             "options": {
@@ -192,88 +307,62 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
+                        "uid": "fdpahg7ywm2v4b"
                     },
-                    "disableTextWrap": false,
                     "editorMode": "code",
-                    "expr": "histogram_quantile(0.5, delta(app_prediction_comparison_bucket[5m]))",
-                    "fullMetaSearch": false,
-                    "includeNullMetadata": true,
+                    "expr": "delta(app_prediction_comparison_sum[5m]) / delta(app_prediction_comparison_count[5m])",
                     "instant": false,
-                    "legendFormat": "Median",
+                    "legendFormat": "Среднее",
                     "range": true,
-                    "refId": "A",
-                    "useBackend": false
+                    "refId": "A"
                 },
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
+                        "uid": "fdpahg7ywm2v4b"
                     },
-                    "expr": "",
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.5, delta(app_prediction_comparison_bucket[5m]))",
                     "hide": false,
                     "instant": false,
+                    "legendFormat": "Медианное значение",
                     "range": true,
                     "refId": "B"
                 },
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
+                        "uid": "fdpahg7ywm2v4b"
                     },
-                    "expr": "",
+                    "editorMode": "code",
+                    "expr": "histogram_quantile(0.05, delta(app_prediction_comparison_bucket[5m]))",
                     "hide": false,
                     "instant": false,
+                    "legendFormat": "5% Квантиль",
                     "range": true,
                     "refId": "C"
                 },
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
+                        "uid": "fdpahg7ywm2v4b"
                     },
                     "editorMode": "code",
                     "expr": "histogram_quantile(0.95, delta(app_prediction_comparison_bucket[5m]))",
                     "hide": false,
                     "instant": false,
-                    "legendFormat": "95%Qantile",
+                    "legendFormat": "95% Квантиль",
                     "range": true,
                     "refId": "D"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
-                    },
-                    "editorMode": "code",
-                    "expr": "histogram_quantile(0.05, delta(app_prediction_comparison_bucket[5m]))",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "5%Quantile",
-                    "range": true,
-                    "refId": "E"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
-                    },
-                    "editorMode": "code",
-                    "expr": "delta(app_prediction_comparison_sum[5m]) / delta(app_prediction_comparison_count[5m])",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Mean",
-                    "range": true,
-                    "refId": "F"
                 }
             ],
-            "title": "Distribution of model predictions",
+            "title": "Распределение предсказания модели",
             "type": "timeseries"
         },
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "adp2z2pz1faioc"
+                "uid": "fdpahg7ywm2v4b"
             },
             "fieldConfig": {
                 "defaults": {
@@ -301,10 +390,10 @@
             "gridPos": {
                 "h": 8,
                 "w": 12,
-                "x": 0,
+                "x": 12,
                 "y": 8
             },
-            "id": 3,
+            "id": 2,
             "options": {
                 "minVizHeight": 75,
                 "minVizWidth": 75,
@@ -325,7 +414,7 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
+                        "uid": "fdpahg7ywm2v4b"
                     },
                     "disableTextWrap": false,
                     "editorMode": "builder",
@@ -341,128 +430,19 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
+                        "uid": "fdpahg7ywm2v4b"
                     },
                     "editorMode": "code",
                     "expr": "rate(process_cpu_seconds_total[1m])",
                     "hide": false,
                     "instant": false,
-                    "legendFormat": "Process_Time per sec",
+                    "legendFormat": "Process time per sec",
                     "range": true,
                     "refId": "B"
                 }
             ],
-            "title": "Load of the infrastructure",
+            "title": "Загрузка инфраструктуры",
             "type": "gauge"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "adp2z2pz1faioc"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisBorderShow": false,
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "insertNulls": false,
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 12,
-                "y": 8
-            },
-            "id": 2,
-            "options": {
-                "legend": {
-                    "calcs": [],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "maxHeight": 600,
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(http_requests_total[5m])",
-                    "instant": false,
-                    "legendFormat": "Q-ty incoming request",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "adp2z2pz1faioc"
-                    },
-                    "editorMode": "code",
-                    "expr": "rate(http_requests_total{handler=\"/predict\"}[1m])",
-                    "hide": false,
-                    "instant": false,
-                    "legendFormat": "Frequency of incoming requests",
-                    "range": true,
-                    "refId": "B"
-                }
-            ],
-            "title": "Load of the service",
-            "type": "timeseries"
         }
     ],
     "refresh": "",
@@ -480,6 +460,6 @@
     "timezone": "browser",
     "title": "New dashboard",
     "uid": "bdp372v9zulmob",
-    "version": 1,
+    "version": 2,
     "weekStart": ""
 }

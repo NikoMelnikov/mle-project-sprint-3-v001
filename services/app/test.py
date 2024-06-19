@@ -1,6 +1,7 @@
 import unittest
 from .handler import FastApiHandler
 import pandas as pd
+import random
 
 #импортирую класс для тестирования
 class TestFastApiHandler(unittest.TestCase):
@@ -9,10 +10,19 @@ class TestFastApiHandler(unittest.TestCase):
         self.handler = FastApiHandler()
         self.test_model_params = [
             {
-                'build_year': 2020, 'building_type_int': 1, 'latitude': 55.7522, 
-                'longitude': 37.6156, 'ceiling_height': 3.0, 'flats_count': 100, 
-                'floors_total': 10, 'has_elevator': 1, 'floor': 5, 
-                'kitchen_area': 12.0, 'living_area': 30.0, 'rooms': 1, 'total_area': 50.0
+                'build_year': random.randint(1950, 2021),
+                'building_type_int': random.randint(0, 2),
+                'latitude': random.uniform(55, 56),
+                'longitude': random.uniform(37, 38),
+                'ceiling_height': random.uniform(2.5, 3.5),
+                'flats_count': random.randint(50, 150),
+                'floors_total': random.randint(5, 20),
+                'has_elevator': random.choice([0, 1]),
+                'floor': random.randint(1, 10),
+                'kitchen_area': random.uniform(10, 15),
+                'living_area': random.uniform(20, 40),
+                'rooms': random.randint(1, 3),
+                'total_area': random.uniform(40, 60)
             }
         ]
     #определяю тестовый метод для проверки метода check_required_query_params класса FastApiHandler

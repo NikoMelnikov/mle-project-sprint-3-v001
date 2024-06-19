@@ -108,6 +108,8 @@ curl -X 'POST'
 
 $ docker image build -f /home/mle-user/mle_projects/mle-project-sprint-3-v001/services/Dockerfile_ml_service . --tag services:with_env
 
+Или переходим в директрию services коммандой cd services и собираем:
+docker image build -f Dockerfile_ml_service . --tag services:with_env
 
 Запускаем:
 

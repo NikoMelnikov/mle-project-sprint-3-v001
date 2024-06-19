@@ -3,6 +3,9 @@ import pickle
 import logging
 import sys
 import pandas as pd
+from dotenv import load_dotenv
+dotenv_path = '/home/mle-user/mle_projects/mle-project-sprint-3-v001/services/.env'
+load_dotenv(dotenv_path)
 
 # Настраиваю логгирование
 logger = logging.getLogger()
@@ -22,7 +25,7 @@ class FastApiHandler:
             "model_params": list
         }
 
-        self.model_path = "./models/model.pkl"
+        self.model_path = os.path.abspath(os.getenv('MODEL_PATH'))
         self.load_model(model_path=self.model_path)
         
         self.required_model_params = [
@@ -30,6 +33,7 @@ class FastApiHandler:
             'ceiling_height', 'flats_count', 'floors_total', 'has_elevator',
             'floor', 'kitchen_area', 'living_area', 'rooms', 'total_area'
         ]
+        
     #загружаю модель 
     def load_model(self, model_path: str):
         try:
@@ -39,10 +43,12 @@ class FastApiHandler:
             return self.model
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
+            
     #получаю предсказания модели
     def churn_predict(self, model_params):
         return self.model.predict(model_params).tolist()
     #проверяю параметры запроса
+    
     def check_required_query_params(self, query_params: dict) -> bool:
         if "request_id" not in query_params or "model_params" not in query_params:
             return False
@@ -53,12 +59,14 @@ class FastApiHandler:
         if not isinstance(query_params["model_params"], self.param_types["model_params"]):
             return False
         return True
+    
     #проверяю наличие обязательных параметров модели
     def check_required_model_params(self, model_params: dict) -> bool:
         if set(model_params[0].keys()) == set(self.required_model_params):
             return True
         return False
     #валидирую запрос
+    
     def validate_params(self, params: dict) -> bool:
         if self.check_required_query_params(params):
             logger.debug("All query params exist")
@@ -72,6 +80,7 @@ class FastApiHandler:
             logger.warning("Not all model params exist")
             return False
         return True
+    
     #основная функция обработчик
     def handle(self, params):
         try:
