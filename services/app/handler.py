@@ -4,8 +4,9 @@ import logging
 import sys
 import pandas as pd
 from dotenv import load_dotenv
-dotenv_path = '/home/mle-user/mle_projects/mle-project-sprint-3-v001/services/.env'
+dotenv_path = '../services/.env'
 load_dotenv(dotenv_path)
+from . import constants
 
 # Настраиваю логгирование
 logger = logging.getLogger()
@@ -28,11 +29,7 @@ class FastApiHandler:
         self.model_path = os.path.abspath(os.getenv('MODEL_PATH'))
         self.load_model(model_path=self.model_path)
         
-        self.required_model_params = [
-            'build_year', 'building_type_int', 'latitude', 'longitude',
-            'ceiling_height', 'flats_count', 'floors_total', 'has_elevator',
-            'floor', 'kitchen_area', 'living_area', 'rooms', 'total_area'
-        ]
+        self.required_model_params = constants.required_model_params
         
     #загружаю модель 
     def load_model(self, model_path: str):
