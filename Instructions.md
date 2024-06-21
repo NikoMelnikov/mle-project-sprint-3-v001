@@ -18,6 +18,8 @@ $ pip install -r requirements.txt
 В директории app создано приложение app - приложение Fast API для модели прогнозирования стоимости квартиры которое в свою очередь использует приложение обработчик handler.
 
 #### Для тестирования работоспособности функции обработчика:
+
+Переходим в дирректорию services коммандой cd services.
 Протестировать обработчик напрямую возможно запустив скрипт:
 
  $ python -m app.handler 
@@ -43,7 +45,8 @@ $ python -m app.test
 
 #### Для запуска сервиса fast api:
 
-$ python -m app.app 
+$ python -m app.app
+
 
 Документация по методу:
 
@@ -104,12 +107,10 @@ curl -X 'POST'
 `
 
 ### 2. FastAPI микросервис в Docker-контейнере
-Собираем образ:
+Собираем образ :
+В дирректории services коммандой:
 
-$ docker image build -f /home/mle-user/mle_projects/mle-project-sprint-3-v001/services/Dockerfile_ml_service . --tag services:with_env
-
-Или переходим в директрию services коммандой cd services и собираем:
-docker image build -f Dockerfile_ml_service . --tag services:with_env
+$ docker image build -f Dockerfile_ml_service . --tag services:with_env
 
 Запускаем:
 
@@ -151,6 +152,8 @@ Grafana доступна по адресу:
 http://localhost:3000/
 
 Для входа в сервис Grafana требуется логин и пароль, соответсвуют установленным значениям в файле .env
+Источник данных Prometheus
+Хост:  http://prometheus:9090
 
 ### 4. Построение дашборда для мониторинга
 
